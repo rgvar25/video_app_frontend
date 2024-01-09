@@ -1,22 +1,34 @@
+import axios from "axios";
+
+
+class AuthService {
 
 
 
-export class AuthService{
+
+    async Signup(credentials) {
+        const requestHeaders = {};
+
+        let response = await axios.post('http://localhost:8000/api/v1/users/register', credentials, {
+            headers: requestHeaders
+        })
+
+        return response;
+
+    
+    };
 
 
-    async Signup(){
+    async Login() {
 
     };
 
 
-    async Login(){
-
-    };
-
-
-    async Logout(){
+    async Logout() {
 
     }
 
 
 }
+
+export const auth = new AuthService();

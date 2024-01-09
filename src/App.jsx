@@ -2,13 +2,12 @@ import { useState } from 'react'
 
 import './App.css'
 import SignupComponent from './components/SignupComponent'
+import SignUpPage from './pages/SignupPage'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <SignupComponent />
+      <SignUpPage />
     </>
   )
 }
