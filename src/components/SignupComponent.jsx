@@ -1,8 +1,11 @@
 import { useForm } from "react-hook-form";
 import { auth } from "../backend-functions/auth";
+import React from "react";
 export default function SignupComponent() {
 
-    const signUp = async (data) => {
+    const [error, setError] = React.useState();
+
+    const handleSignUp = async (data) => {
         const { username, email, fullName, avatar, coverImage, password } = data;
 
         //use formData to correctly construct a request body.
@@ -12,15 +15,22 @@ export default function SignupComponent() {
         formData.append("fullName", fullName);
         formData.append("password", password);
         formData.append("avatar", avatar[0]);
-
-
         if (coverImage.length > 0) {
             formData.append("coverImage", coverImage[0]);
         }
 
-        console.log(formData);
-        const response = await auth.Signup(formData);
-        console.log(response);
+        try {
+            const response = await auth.Signup(formData);
+            // console.log("success:" + response);
+
+        } catch (error) {
+            setError(error.message);
+            //console.log(error.message);
+        }
+
+
+
+
     }
 
 
@@ -33,7 +43,7 @@ export default function SignupComponent() {
             </div>
 
             <div className=" justify-center flex w-full ">
-                <form onSubmit={handleSubmit(signUp)} encType="multipart/form-data" className=" flex flex-col">
+                <form onSubmit={handleSubmit(handleSignUp)} encType="multipart/form-data" className=" flex flex-col">
                     <input name="username" type="text" className=" my-4 p-1 transition-opacity ease-in-out duration-300 outline-none opacity-50 focus:opacity-100 text-black rounded-md" placeholder="Username" {...register("username")} />
 
                     <input type="text" className=" my-4 p-1 transition-opacity ease-in-out duration-300 outline-none opacity-50 focus:opacity-100 text-black rounded-md" name="email" placeholder="Email" {...register("email")} />
@@ -56,9 +66,16 @@ export default function SignupComponent() {
 
                     <input type="password" name="confirmPassword" className=" my-4 p-1 transition-opacity ease-in-out duration-300 outline-none opacity-50 focus:opacity-100 text-black rounded-md" placeholder="Confirm password" {...register("confirmPassword")} />
 
-                    <input type="submit" className=" bg-white text-black w-24 h-8 rounded-lg  mx-auto my-4 opacity-50 hover:opacity-100 transition-opacity ease-in  duration-300  cursor-pointer" />
+                    <input type="submit" className=" bg-white text-black w-24 h-8 rounded-lg  mx-auto my-4 opacity-50 hover:opacity-100 transition-opacity ease-in  duration-300  cursor-pointer" value="Signup" />
 
                 </form>
+
+
+
+            </div>
+
+            <div className=" my-3">
+                {error ? <span>{error}</span> : null}
             </div>
 
 
