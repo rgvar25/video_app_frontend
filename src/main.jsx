@@ -6,6 +6,8 @@ import './index.css'
 import LandingPage from './pages/LandingPage.jsx'
 import SignUpPage from './pages/SignupPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
+import { Provider } from 'react-redux'
+import store from './store/store.js'
 
 
 
@@ -33,9 +35,9 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <Provider store={store}>
 
     <RouterProvider router={router} />
 
-  </React.StrictMode>,
+  </Provider>,
 )

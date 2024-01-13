@@ -1,9 +1,14 @@
 import { useForm } from "react-hook-form";
 import { auth } from "../backend-functions/auth";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux"
+import { login } from "../store/authSlice";
+
 export default function SignupComponent() {
 
     const [error, setError] = React.useState();
+    const dispatch = useDispatch();
+    const userD = useSelector(state => state.auth.userData);
 
     const handleSignUp = async (data) => {
         const { username, email, fullName, avatar, coverImage, password } = data;
@@ -21,7 +26,15 @@ export default function SignupComponent() {
 
         try {
             const response = await auth.Signup(formData);
-            // console.log("success:" + response);
+            console.log(response.data); // log the entire response for debugging
+
+            const { _id, username, email, fullName, avatar, coverImage } = response.data.data;
+
+            console.log("Extracted Data:", { _id, username, email, fullName, avatar, coverImage });
+
+            dispatch(login({ _id, username, email, fullName, avatar, coverImage }));
+
+            console.log("User Dispatched:", userD);
 
         } catch (error) {
             setError(error.message);
