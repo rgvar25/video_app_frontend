@@ -3,6 +3,7 @@ import { auth } from "../backend-functions/auth";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { login } from "../store/authSlice";
+import { Link } from "react-router-dom"
 
 export default function SignupComponent() {
 
@@ -87,9 +88,15 @@ export default function SignupComponent() {
 
             </div>
 
+            <div className=" my-2">
+                <span>Already a user? <Link className=" cursor-pointer font-semibold" to="/login"> Log in </Link></span>
+            </div>
+
             <div className=" my-3">
                 {error ? <span>{error}</span> : null}
             </div>
+
+
 
 
         </div >

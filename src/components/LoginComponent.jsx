@@ -1,11 +1,15 @@
 
 import React from "react";
 import { useForm } from "react-hook-form"
+import {Link} from "react-router-dom"
+
+
+
 
 export default function LoginComponent() {
 
-    const [error,setError] = React.useState()
-;
+    const [error, setError] = React.useState()
+        ;
     const handleLogin = () => {
 
     }
@@ -32,6 +36,10 @@ export default function LoginComponent() {
 
 
 
+                </div>
+
+                <div className=" my-2">
+                    <span>New here? <Link className=" cursor-pointer font-semibold" to="/signup">Sign in</Link></span>
                 </div>
 
                 <div className=" my-3">
