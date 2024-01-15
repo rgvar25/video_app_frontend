@@ -17,18 +17,23 @@ class AuthService {
         } catch (error) {
             throw new Error(error.response.data.data)
         }
-        
-            
-        
-
-
-
-
     };
 
 
-    async Login() {
+    async Login(credentials) {
+        const requestHeaders = {}
+        console.log(credentials);
 
+        try {
+            let response = await axios.post("http://localhost:8000/api/v1/users/login", credentials, {
+                headers: requestHeaders
+            })
+
+            console.log(response);
+            return response;
+        } catch (error) {
+            throw new Error(error.response.data.data)
+        }
     };
 
 
