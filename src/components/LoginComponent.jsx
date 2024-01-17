@@ -23,6 +23,7 @@ export default function LoginComponent() {
             const response = await auth.Login(data);
             console.log(response);
         } catch (error) {
+            console.log(error);
             setError(error.message)
         }
 

@@ -26,13 +26,15 @@ class AuthService {
 
         try {
             let response = await axios.post("http://localhost:8000/api/v1/users/login", credentials, {
-                headers: requestHeaders
+                headers: requestHeaders,
+                withCredentials: true //To send cookies.
             })
 
             console.log(response);
             return response;
         } catch (error) {
-            throw new Error(error.response.data.data)
+            console.log(error);
+            // throw new Error(error.response.data.data)
         }
     };
 
