@@ -3,14 +3,15 @@ import { auth } from "../backend-functions/auth";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { login } from "../store/authSlice";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 
 export default function SignupComponent() {
 
     const [error, setError] = React.useState();
-    const dispatch = useDispatch();
-    const userD = useSelector(state => state.auth.userData);
+    
+
+    const navigate = useNavigate()
 
     const handleSignUp = async (data) => {
         const { username, email, fullName, avatar, coverImage, password } = data;
@@ -30,14 +31,7 @@ export default function SignupComponent() {
             const response = await auth.Signup(formData);
             //console.log(response.data); // log the entire response for debugging
 
-            const { _id, username, email, fullName, avatar, coverImage } = response.data.data;
-
-          //  console.log("Extracted Data:", { _id, username, email, fullName, avatar, coverImage });
-
-            dispatch(login({ _id, username, email, fullName, avatar, coverImage }));
-
-            //This won't give updated value as Use Selector still points to previous value. If you want updated value use useEffect with userD as dependancy
-            //console.log("User Dispatched:", userD);
+            navigate("/login");
 
         } catch (error) {
             setError(error.message);

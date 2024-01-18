@@ -22,7 +22,6 @@ class AuthService {
 
     async Login(credentials) {
         const requestHeaders = {}
-        console.log(credentials);
 
         try {
             let response = await axios.post("http://localhost:8000/api/v1/users/login", credentials, {
@@ -33,14 +32,43 @@ class AuthService {
             console.log(response);
             return response;
         } catch (error) {
-            console.log(error);
-            // throw new Error(error.response.data.data)
+
+            throw new Error(error.response.data.data)
         }
     };
 
 
     async Logout() {
+        const requestHeaders = {};
 
+        try {
+            let response = await axios.post("http://localhost:8000/api/v1/users/logout", {}, {
+                headers: requestHeaders,
+                withCredentials: true
+            })
+
+
+            return response;
+        } catch (error) {
+
+            throw new Error(error)
+        }
+
+    }
+
+    async Verify() {
+
+        try {
+            let response = await axios.post("http://localhost:8000/api/v1/users/verify", {}, {
+                headers: {},
+                withCredentials: true
+            })
+            console.log(response);
+            return response
+
+        } catch (error) {
+            throw new Error(error)
+        }
     }
 
 

@@ -3,25 +3,28 @@ import React from "react";
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
 import { auth } from "../backend-functions/auth";
-
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux"
+import { login } from "../store/authSlice";
 
 
 
 export default function LoginComponent() {
 
     const [error, setError] = React.useState()
-       
+    const navigate = useNavigate()
     //Same as handleSignup in SignUpComponent 
-    const handleLogin = async (data) => {
-        const { username, password } = data;
-        const formData = new FormData();
-        formData.append('uname', username);
-        formData.append('password', password);
-        console.log(formData);
+    const { register, handleSubmit } = useForm();
+    const dispatch = useDispatch();
 
+
+    const handleLogin = async (data) => {
         try {
             const response = await auth.Login(data);
-            console.log(response);
+            const { _id, username, email, fullName, avatar, coverImage } = response.data.data.user;
+            await dispatch(login({ _id, username, email, fullName, avatar, coverImage }));
+            navigate("/home")
+            
         } catch (error) {
             console.log(error);
             setError(error.message)
@@ -29,7 +32,7 @@ export default function LoginComponent() {
 
     }
 
-    const { register, handleSubmit } = useForm();
+
     return (
         <>
 

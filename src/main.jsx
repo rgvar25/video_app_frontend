@@ -7,7 +7,9 @@ import LandingPage from './pages/LandingPage.jsx'
 import SignUpPage from './pages/SignupPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import { Provider } from 'react-redux'
-import store from './store/store.js'
+import { store, persistor } from "./store/store.js"
+import { PersistGate } from 'redux-persist/integration/react';
+import HomePage from './pages/HomePage.jsx'
 
 
 
@@ -28,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginPage />
+      },
+      {
+        path: "/home",
+        element: <HomePage />
       }
     ]
 
@@ -36,8 +42,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-
-    <RouterProvider router={router} />
-
+    <PersistGate loading={null} persistor={persistor}>
+      <RouterProvider router={router}>
+        <App />
+      </RouterProvider>
+    </PersistGate>
   </Provider>,
-)
+);
